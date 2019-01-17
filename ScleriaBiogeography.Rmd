@@ -78,6 +78,8 @@ write.nexus.data(ITS3, file = "ITSnew3.nex", interleaved = F, gap = "-", missing
 write.nexus.data(rps163, file = "rps16new3.nex", interleaved = F, gap = "-", missing = "?")
 write.nexus.data(ndhF3, file = "ndhFnew3.nex", interleaved = F, gap = "-", missing = "?")
 
+setdiff(names(ITS3),union(names(ndhF3),names(rps163)))
+setdiff(union(names(ndhF3),names(rps163)),names(ITS3))
 
 ```
 
