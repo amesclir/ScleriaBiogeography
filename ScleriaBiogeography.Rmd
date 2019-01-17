@@ -1,0 +1,83 @@
+---
+title: "ScleriaBiogeography"
+author: "Marcial Escudero"
+date: "October 22, 2018"
+output: html_document
+---
+
+First, we are going to set up the matrices
+
+```{r, echo = F}
+
+library(ape)
+ITS <- read.nexus.data("ITS.nex")
+mydata <- read.csv("mydata.csv")
+mynamesITS <- mydata[,8]
+names(mynamesITS) = paste(mydata[,2],mydata[,3], mydata[,1], sep="_")
+mynamesITS
+names(mynamesITS)[match(names(ITS),mynamesITS)]
+names(ITS) <- names(mynamesITS)[match(names(ITS),mynamesITS)]
+write.nexus.data(ITS, file = "ITSnew.nex", interleaved = F, gap = "-", missing = "?")
+
+rps16<- read.nexus.data("rps16.nex")
+mydata <- read.csv("mydata.csv")
+mynamesrps16 <- mydata[,10]
+names(mynamesrps16) = paste(mydata[,2],mydata[,3], mydata[,1], sep="_")
+mynamesrps16
+names(mynamesrps16)[match(names(rps16),mynamesrps16)]
+names(rps16) <- names(mynamesrps16)[match(names(rps16),mynamesrps16)]
+write.nexus.data(rps16, file = "rps16new.nex", interleaved = F, gap = "-", missing = "?")
+
+ndhF<- read.nexus.data("ndhF.nex")
+mydata <- read.csv("mydata.csv")
+mynamesndhF <- mydata[,12]
+names(mynamesndhF) = paste(mydata[,2],mydata[,3], mydata[,1], sep="_")
+mynamesndhF
+names(mynamesndhF)[match(names(ndhF),mynamesndhF)]
+names(ndhF) <- names(mynamesndhF)[match(names(ndhF),mynamesndhF)]
+write.nexus.data(ndhF, file = "ndhFnew.nex", interleaved = F, gap = "-", missing = "?")
+
+library(phyloch)
+
+rps16ndhF <- c.genes(rps16, ndhF, match = F)
+write.nexus.data(rps16ndhF, file = "rps16ndhF.nex", interleaved = F, gap = "-", missing = "?")
+
+sequencestoremove1 <- setdiff(names(ITS),union(names(ndhF),names(rps16)))
+sequencestokeep1 <- setdiff(names(ITS),sequencestoremove1)
+
+sequencestoremove2 <- setdiff(union(names(ndhF),names(rps16)),names(ITS))
+sequencestokeep2 <- setdiff(names(rps16),sequencestoremove2)
+sequencestokeep3 <- setdiff(names(ndhF),sequencestoremove2)
+
+ITS2 <- ITS[sequencestokeep1]
+rps162 <- rps16[sequencestokeep2]
+ndhF2 <- ndhF[sequencestokeep3]
+write.nexus.data(ITS2, file = "ITSnew2.nex", interleaved = F, gap = "-", missing = "?")
+write.nexus.data(rps162, file = "rps16new2.nex", interleaved = F, gap = "-", missing = "?")
+write.nexus.data(ndhF2, file = "ndhFnew2.nex", interleaved = F, gap = "-", missing = "?")
+
+setdiff(names(ITS2),c(names(ndhF2),names(rps162)))
+setdiff(c(names(ndhF2),names(rps162)),names(ITS2))
+
+```
+
+We are going to use only one sample per species/subspecies. We are going to set up the matrices again
+
+```{r, echo = F}
+
+mydata2 <- read.csv("mydata2.csv")
+sequencestokeep4 = paste(mydata2[,2],mydata2[,3], mydata2[,1], sep="_")
+sequencestokeep4 <- sequencestokeep4[sequencestokeep4 != "__"] 
+ITS3 <- ITS[setdiff(sequencestokeep4,setdiff(sequencestokeep4,names(ITS)))]
+names(ITS3)
+rps163 <- rps16[setdiff(sequencestokeep4,setdiff(sequencestokeep4,names(rps16)))]
+names(rps163)
+ndhF3 <- ndhF[setdiff(sequencestokeep4,setdiff(sequencestokeep4,names(ndhF)))]
+names(ndhF3)
+write.nexus.data(ITS3, file = "ITSnew3.nex", interleaved = F, gap = "-", missing = "?")
+write.nexus.data(rps163, file = "rps16new3.nex", interleaved = F, gap = "-", missing = "?")
+write.nexus.data(ndhF3, file = "ndhFnew3.nex", interleaved = F, gap = "-", missing = "?")
+
+
+```
+
