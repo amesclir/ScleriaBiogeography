@@ -5,7 +5,7 @@ library(FD)
 library(snow)
 library(parallel)
 library(BioGeoBEARS)
-library(roxygen2)
+#library(roxygen2)
 
 tr = read.tree("tree.tree")
 tr
