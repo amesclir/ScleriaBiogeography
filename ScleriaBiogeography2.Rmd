@@ -4,6 +4,7 @@ author: "amesclir"
 date: "12/03/2019"
 output: html_document
 editor_options: 
+  chunk_output_type: inline
 chunk_output_type: console
 ---
 
@@ -1391,7 +1392,7 @@ tr
 trfn = np("tree.tree")
 moref(trfn)
 
-geogfn = np("Scleria_BGB_occurrence_world.txt")
+geogfn = np("Scleria_BGB_occurrence_worldbis.txt")
 
 # Look at the raw geography text file:
 moref(geogfn)
@@ -1417,7 +1418,7 @@ BioGeoBEARS_run_object$include_null_range = TRUE    # set to FALSE for e.g. DEC*
 
 # Set up a time-stratified analysis:
 BioGeoBEARS_run_object$timesfn = "timeperiods.txt"
-BioGeoBEARS_run_object$dispersal_multipliers_fn = "Scleria_BGB_manual_dispersal_multipliers.txt"
+BioGeoBEARS_run_object$dispersal_multipliers_fn = "Scleria_BGB_manual_dispersal_multipliersbis.txt"
 #BioGeoBEARS_run_object$areas_allowed_fn = "areas_allowed.txt"
 #BioGeoBEARS_run_object$areas_adjacency_fn = "areas_adjacency.txt"
 #BioGeoBEARS_run_object$distsfn = "distances_matrix.txt"
@@ -1489,7 +1490,7 @@ if (runslow)
     } else {
     # Loads to "res"
     load(resfn)
-    resDECjc = res
+    resDECjcbis = res
     }
 
 
